@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceprion.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         //добавить валидацию
         user.setId(getNextId());
         users.put(user.getId(), user);
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @PutMapping
-    public User update(@RequestBody User newUser) {
+    public User update(@Valid @RequestBody User newUser) {
         if (newUser == null) {
             //исключение
         }
@@ -37,7 +38,6 @@ public class UserController {
         }
         if (users.containsKey(newUser.getId())) {
             User oldUser = users.get(newUser.getId());
-            //добавить валидацию полей
             oldUser.setName(newUser.getName());
             oldUser.setEmail(newUser.getEmail());
             oldUser.setLogin(newUser.getLogin());
