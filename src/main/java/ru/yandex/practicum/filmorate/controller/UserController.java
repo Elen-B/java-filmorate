@@ -37,6 +37,7 @@ public class UserController {
         long id = getNextId();
         log.debug("Next id is {}", id);
         user.setId(id);
+        user.setName(user.getName());
         users.put(user.getId(), user);
         log.debug("new film is {}", user);
         return user;

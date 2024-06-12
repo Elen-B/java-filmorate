@@ -1,13 +1,12 @@
 package ru.yandex.practicum.filmorate.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import ru.yandex.practicum.filmorate.validator.AfterCinemaBirthday;
-import ru.yandex.practicum.filmorate.validator.PositiveDuration;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDate;
 
 /**
  * Film.
@@ -20,7 +19,7 @@ public class Film {
     @Size(max = 200)
     private String description;
     @AfterCinemaBirthday
-    private Instant releaseDate;
-    @PositiveDuration
-    private Duration duration;
+    private LocalDate releaseDate;
+    @Positive
+    private Long duration;
 }

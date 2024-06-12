@@ -3,22 +3,20 @@ package ru.yandex.practicum.filmorate.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.time.Instant;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.Month;
 
-public class AfterCinemaBirthdayValidator implements ConstraintValidator<AfterCinemaBirthday, Instant> {
-    private final Calendar cinemaBirthday;
-
-    public AfterCinemaBirthdayValidator() {
-        cinemaBirthday = Calendar.getInstance();
-        cinemaBirthday.set(1895, Calendar.DECEMBER, 28);
-    }
+public class AfterCinemaBirthdayValidator implements ConstraintValidator<AfterCinemaBirthday, LocalDate> {
+    private final LocalDate cinemaBirthday = LocalDate.of(1895, Month.DECEMBER, 28);
 
     public final void initialize(final AfterCinemaBirthday annotation) {
     }
 
-    public final boolean isValid(final Instant value,
+    public final boolean isValid(final LocalDate value,
                                  final ConstraintValidatorContext context) {
-        return value.getEpochSecond() - cinemaBirthday.toInstant().getEpochSecond() >= 0;
+        if (value == null) {
+            return false;
+        }
+        return cinemaBirthday.isBefore(value);
     }
 }

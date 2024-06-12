@@ -39,16 +39,17 @@ public class FilmController {
         film.setId(id);
         films.put(film.getId(), film);
         log.debug("new film is {}", film);
+        log.error(film.getReleaseDate().toString());
         return film;
     }
 
     @PutMapping
-    public Film update(@Valid @RequestBody Film newFilm, BindingResult binding) throws BindException {
+    public Film update(@Valid @RequestBody(required = false) Film newFilm, BindingResult binding) throws BindException {
         if (binding.hasFieldErrors()) {
             binding.getFieldErrors()
                     .forEach(e ->
                             log.error("film update: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
-            throw new BindException(binding);
+            throw new ConditionsNotMetException("ddd");//BindException(binding);
         }
         if (newFilm == null) {
             log.error("film update: json is null");
