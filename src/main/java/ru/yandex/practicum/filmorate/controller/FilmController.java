@@ -39,7 +39,6 @@ public class FilmController {
         film.setId(id);
         films.put(film.getId(), film);
         log.debug("new film is {}", film);
-        log.error(film.getReleaseDate().toString());
         return film;
     }
 
