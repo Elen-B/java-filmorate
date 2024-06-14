@@ -83,6 +83,26 @@ class UserTest {
     }
 
     @Test
+    void shouldNotValidUserWithNullEmail() {
+        User user = buildValidTestUser();
+        user.setEmail(null);
+
+        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+            Validator validator = validatorFactory.getValidator();
+            var violations = validator.validate(user);
+            assertEquals(1, violations.stream()
+                    .toList().size(), "Валидация не выполнена");
+            assertEquals("NotNull",
+                    violations.stream()
+                            .toList()
+                            .getFirst()
+                            .getConstraintDescriptor()
+                            .getAnnotation().annotationType().getSimpleName(),
+                    "Не работает валидация на пустую почту пользователя");
+        }
+    }
+
+    @Test
     void shouldNotValidUserWithFutureBirthday() {
         User user = buildValidTestUser();
         user.setBirthday(LocalDate.of(2025, Month.JANUARY, 1));

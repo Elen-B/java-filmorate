@@ -48,7 +48,7 @@ public class FilmController {
             binding.getFieldErrors()
                     .forEach(e ->
                             log.error("film update: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
-            throw new ConditionsNotMetException("ddd");//BindException(binding);
+            throw new BindException(binding);
         }
         if (newFilm == null) {
             log.error("film update: json is null");
