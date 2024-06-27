@@ -32,7 +32,7 @@ public class UserController {
                             log.error("user create: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
             throw new BindException(binding);
         }
-        return userService.add(user);
+        return userService.addUser(user);
     }
 
     @PutMapping
@@ -43,6 +43,31 @@ public class UserController {
                             log.error("user update: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
             throw new BindException(binding);
         }
-        return userService.update(newUser);
+        return userService.updateUser(newUser);
+    }
+
+    @GetMapping("/{id}")
+    public User getById(@PathVariable("id") long userId) {
+        return userService.getUserById(userId);
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public void addFriend(@PathVariable("id") long userId, @PathVariable("friendId") long friendId) {
+        userService.addFriend(userId, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public void deleteFriend(@PathVariable("id") long userId, @PathVariable("friendId") long friendId) {
+        userService.deleteFriend(userId, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public Collection<User> getAllFriends(@PathVariable("id") long userId) {
+        return userService.getAllFriends(userId);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public Collection<User> getCommonFriends(@PathVariable("id") long userId, @PathVariable("otherId") long otherId) {
+        return userService.getCommonFriends(userId, otherId);
     }
 }

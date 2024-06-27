@@ -19,6 +19,11 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
+    public User getById(Long id) {
+        return users.get(id);
+    }
+
+    @Override
     public User add(User user) {
         long id = getNextId();
         //log.debug("Next id is {}", id);
