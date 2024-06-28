@@ -25,10 +25,12 @@ public class FilmService {
     }
 
     public Film add(Film film) {
+        log.info("FilmService: add film {}", film);
         return filmStorage.add(film);
     }
 
     public Film update(Film film) {
+        log.info("FilmService: update film {}", film);
         if (film == null) {
             throw new ConditionsNotMetException("Данные о фильме не переданы");
         }
@@ -39,10 +41,12 @@ public class FilmService {
     }
 
     public void delete(Long id) {
+        log.info("FilmService: delete film id = {}", id);
         filmStorage.delete(id);
     }
 
     public void addLike(Long filmId, Long userId) {
+        log.info("FilmService: addLike film id = {}, user id = {}", filmId, userId);
         Film film = filmStorage.getById(filmId);
         User user = userStorage.getById(userId);
         if (film == null) {
@@ -55,6 +59,7 @@ public class FilmService {
     }
 
     public void removeLike(Long filmId, Long userId) {
+        log.info("FilmService: removeLike film id = {}, user id = {}", filmId, userId);
         Film film = filmStorage.getById(filmId);
         User user = userStorage.getById(userId);
         if (film == null) {

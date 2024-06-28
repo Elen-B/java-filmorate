@@ -2,8 +2,6 @@ package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
@@ -15,7 +13,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class FilmController {
     private final FilmService filmService;
-    private static final Logger log = LoggerFactory.getLogger(FilmController.class);
 
     @GetMapping
     public Collection<Film> getAll() {

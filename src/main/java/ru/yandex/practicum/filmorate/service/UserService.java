@@ -29,10 +29,12 @@ public class UserService {
     }
 
     public User addUser(User user) {
+        log.info("UserService: addUser user = {}", user);
         return userStorage.add(user);
     }
 
     public User updateUser(User user) {
+        log.info("UserService: updateUser user = {}", user);
         if (user == null) {
             log.error("user update: json is null");
             throw new ConditionsNotMetException("Данные о пользователе не переданы");
@@ -45,10 +47,12 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+        log.info("UserService: deleteUser user id = {}", id);
         userStorage.delete(id);
     }
 
     public void addFriend(Long userId, Long friendId) {
+        log.info("UserService: addFriend user id = {}, friend id = {}", userId, friendId);
         User user = userStorage.getById(userId);
         User friend = userStorage.getById(friendId);
         if (user == null) {
@@ -65,6 +69,7 @@ public class UserService {
     }
 
     public void deleteFriend(Long userId, Long friendId) {
+        log.info("UserService: deleteFriend user id = {}, friend id = {}", userId, friendId);
         User user = userStorage.getById(userId);
         User friend = userStorage.getById(friendId);
         if (user == null) {
