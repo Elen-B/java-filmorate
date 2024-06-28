@@ -13,6 +13,7 @@ import java.util.Map;
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private static Integer globalId = 0;
+
     @Override
     public Collection<User> getAll() {
         return users.values();

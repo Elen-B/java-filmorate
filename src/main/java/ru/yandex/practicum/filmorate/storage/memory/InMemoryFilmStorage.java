@@ -13,6 +13,7 @@ import java.util.Map;
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Long, Film> films = new HashMap<>();
     private static Integer globalId = 0;
+
     @Override
     public Collection<Film> getAll() {
         return films.values();
