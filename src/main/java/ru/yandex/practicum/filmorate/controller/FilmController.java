@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
@@ -25,24 +23,12 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film create(@Valid @RequestBody Film film, BindingResult binding) throws BindException {
-        if (binding.hasFieldErrors()) {
-            binding.getFieldErrors()
-                    .forEach(e ->
-                            log.error("film create: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
-            throw new BindException(binding);
-        }
+    public Film create(@Valid @RequestBody Film film) {
         return filmService.add(film);
     }
 
     @PutMapping
-    public Film update(@Valid @RequestBody(required = false) Film newFilm, BindingResult binding) throws BindException {
-        if (binding.hasFieldErrors()) {
-            binding.getFieldErrors()
-                    .forEach(e ->
-                            log.error("film update: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
-            throw new BindException(binding);
-        }
+    public Film update(@Valid @RequestBody(required = false) Film newFilm) {
         return filmService.update(newFilm);
     }
 

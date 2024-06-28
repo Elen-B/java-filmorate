@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
@@ -25,24 +23,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user, BindingResult binding) throws BindException {
-        if (binding.hasFieldErrors()) {
-            binding.getFieldErrors()
-                    .forEach(e ->
-                            log.error("user create: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
-            throw new BindException(binding);
-        }
+    public User create(@Valid @RequestBody User user) {
         return userService.addUser(user);
     }
 
     @PutMapping
-    public User update(@Valid @RequestBody User newUser, BindingResult binding) throws BindException {
-        if (binding.hasFieldErrors()) {
-            binding.getFieldErrors()
-                    .forEach(e ->
-                            log.error("user update: field: {}, rejected value: {}", e.getField(), e.getRejectedValue()));
-            throw new BindException(binding);
-        }
+    public User update(@Valid @RequestBody User newUser) {
         return userService.updateUser(newUser);
     }
 

@@ -20,7 +20,9 @@ public class Film {
     private String name;
     @Size(max = 200)
     private String description;
-    @AfterCinemaBirthday
+    @AfterCinemaBirthday(
+        message = "Дата выхода фильма слишком далеко в прошлом"
+    )
     private LocalDate releaseDate;
     @Positive
     private Long duration;

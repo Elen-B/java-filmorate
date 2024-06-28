@@ -14,12 +14,16 @@ import java.util.Set;
 public class User {
     private Long id;
     @Email
-    @NotNull
+    @NotNull(
+            message = "Не может быть пустым"
+    )
     private String email;
     @NotBlank
     private String login;
     private String name;
-    @PastOrPresent
+    @PastOrPresent(
+            message = "Неверная дата рождения"
+    )
     private LocalDate birthday;
     private Set<Long> friends = new HashSet<>();
 
