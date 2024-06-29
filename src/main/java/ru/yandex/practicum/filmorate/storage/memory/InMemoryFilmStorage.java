@@ -40,10 +40,8 @@ public class InMemoryFilmStorage implements FilmStorage {
             oldFilm.setDescription(film.getDescription());
             oldFilm.setReleaseDate(film.getReleaseDate());
             oldFilm.setDuration(film.getDuration());
-            //log.debug("new film is {}", oldFilm);
             return oldFilm;
         }
-        //log.error("film update: id is not found");
         throw new NotFoundException(String.format("Фильм с id = %d не найден", film.getId()));
     }
 

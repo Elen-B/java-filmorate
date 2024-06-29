@@ -31,9 +31,6 @@ public class FilmService {
 
     public Film update(Film film) {
         log.info("FilmService: update film {}", film);
-        if (film == null) {
-            throw new ConditionsNotMetException("Данные о фильме не переданы");
-        }
         if (film.getId() == null) {
             throw new ConditionsNotMetException("Id фильма должен быть указан");
         }

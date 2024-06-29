@@ -27,11 +27,9 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User add(User user) {
         long id = getNextId();
-        //log.debug("Next id is {}", id);
         user.setId(id);
         user.setName(user.getName());
         users.put(user.getId(), user);
-        //log.debug("new film is {}", user);
         return user;
     }
 
@@ -43,10 +41,8 @@ public class InMemoryUserStorage implements UserStorage {
             oldUser.setEmail(user.getEmail());
             oldUser.setLogin(user.getLogin());
             oldUser.setBirthday(user.getBirthday());
-            //log.debug("updated user is {}", oldUser);
             return oldUser;
         }
-        //log.error("user update: id is not found");
         throw new NotFoundException(String.format("Пользователь с id = %d не найден", user.getId()));
     }
 

@@ -35,10 +35,6 @@ public class UserService {
 
     public User updateUser(User user) {
         log.info("UserService: updateUser user = {}", user);
-        if (user == null) {
-            log.error("user update: json is null");
-            throw new ConditionsNotMetException("Данные о пользователе не переданы");
-        }
         if (user.getId() == null) {
             log.error("user update: id is null");
             throw new ConditionsNotMetException("Id должен быть указан");
