@@ -7,6 +7,8 @@ import lombok.Data;
 import ru.yandex.practicum.filmorate.validator.AfterCinemaBirthday;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Film.
@@ -18,8 +20,11 @@ public class Film {
     private String name;
     @Size(max = 200)
     private String description;
-    @AfterCinemaBirthday
+    @AfterCinemaBirthday(
+        message = "Дата выхода фильма слишком далеко в прошлом"
+    )
     private LocalDate releaseDate;
     @Positive
     private Long duration;
+    private Set<Long> userLikes = new HashSet<>();
 }
