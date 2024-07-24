@@ -123,6 +123,9 @@ public class DbFilmStorage extends DbBaseStorage<Film> implements FilmStorage {
     }
 
     private List<Long> getGenresId(List<Genre> genres) {
+        if (genres == null) {
+            return null;
+        }
         return genres.stream()
                 .map(Genre::getId)
                 .collect(Collectors.toList());

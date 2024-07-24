@@ -27,7 +27,6 @@ public class FilmRowMapper implements RowMapper<Film> {
         film.setMpa(generateMpa(rs.getLong("rating_id")));
         String likes = rs.getString("likes");
         film.setUserLikes(split(likes));
-        System.out.println("rs.getString(genres) = " + rs.getString("genres"));
         film.setGenres(split(rs.getString("genres"))
                 .stream()
                 .map(this::generateGenre)
