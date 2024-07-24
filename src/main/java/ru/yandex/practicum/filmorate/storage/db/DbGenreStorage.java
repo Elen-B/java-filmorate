@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.GenreStorage;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class DbGenreStorage extends DbBaseStorage<Genre> implements GenreStorage {
     private static final String FIND_ALL_QUERY = "SELECT * FROM genre";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM genre WHERE genre_id = ?";
+
     public DbGenreStorage(JdbcTemplate jdbc, RowMapper<Genre> mapper) {
         super(jdbc, mapper, Genre.class);
     }
