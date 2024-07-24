@@ -39,6 +39,10 @@ public class UserService {
             log.error("user update: id is null");
             throw new ConditionsNotMetException("Id должен быть указан");
         }
+        User oldUser = userStorage.getById(user.getId());
+        if (oldUser == null) {
+            throw new NotFoundException(String.format("Пользователь с ид %s не найден", user.getId()));
+        }
         return userStorage.update(user);
     }
 
@@ -60,8 +64,7 @@ public class UserService {
         if (Objects.equals(userId, friendId)) {
             throw new IllegalArgumentException("Ид друга совпадает с ид пользователя");
         }
-        user.getFriends().add(friendId);
-        friend.getFriends().add(userId);
+        userStorage.addFriend(user, friend);
     }
 
     public void deleteFriend(Long userId, Long friendId) {
@@ -74,8 +77,7 @@ public class UserService {
         if (friend == null) {
             throw new NotFoundException(String.format("Пользователь с ид %s не найден", friendId));
         }
-        user.getFriends().remove(friendId);
-        friend.getFriends().remove(userId);
+        userStorage.deleteFriend(userId, friendId);
     }
 
     public Collection<User> getAllFriends(Long userId) {
