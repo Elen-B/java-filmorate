@@ -96,7 +96,7 @@ class DbUserStorageTest {
         User resultUser = userStorage.getById(id);
         User resultFriend = userStorage.getById(friendId);
         assertEquals(1, resultUser.getFriends().size(), "друг не добавлен");
-        assertEquals(0, resultFriend.getFriends().size(), "дружба должна быть односторонней" );
+        assertEquals(0, resultFriend.getFriends().size(), "дружба должна быть односторонней");
     }
 
     @Test
@@ -113,7 +113,7 @@ class DbUserStorageTest {
         User resultUser = userStorage.getById(id);
         User resultFriend = userStorage.getById(friendId);
         assertEquals(0, resultUser.getFriends().size(), "друг не удален");
-        assertEquals(1, resultFriend.getFriends().size(), "у друга не должен измениться список друзей" );
+        assertEquals(1, resultFriend.getFriends().size(), "у друга не должен измениться список друзей");
     }
 
     private static User getTestUser() {
