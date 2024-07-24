@@ -15,6 +15,7 @@ import java.util.Optional;
 public class DbMpaStorage extends DbBaseStorage<Mpa> implements MpaStorage {
     private static final String FIND_ALL_QUERY = "SELECT * FROM rating";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM rating WHERE rating_id = ?";
+
     public DbMpaStorage(JdbcTemplate jdbc, RowMapper<Mpa> mapper) {
         super(jdbc, mapper, Mpa.class);
     }
