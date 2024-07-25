@@ -31,6 +31,9 @@ public class UserService {
 
     public User addUser(User user) {
         log.info("UserService: addUser user = {}", user);
+        if (userStorage.getByEmail(user.getEmail()) != null) {
+            throw new DublicateException(String.format("Пользователь с email %s уже существует", user.getEmail()));
+        }
         return userStorage.add(user);
     }
 
@@ -43,6 +46,10 @@ public class UserService {
         User oldUser = userStorage.getById(user.getId());
         if (oldUser == null) {
             throw new NotFoundException(String.format("Пользователь с ид %s не найден", user.getId()));
+        }
+        User existUser = userStorage.getByEmail(user.getEmail());
+        if (existUser != null && !Objects.equals(user.getId(), existUser.getId())) {
+            throw new DublicateException(String.format("Пользователь с email %s уже существует", user.getEmail()));
         }
         return userStorage.update(user);
     }

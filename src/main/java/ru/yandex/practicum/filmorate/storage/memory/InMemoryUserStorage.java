@@ -25,6 +25,15 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
+    public User getByEmail(String email) {
+        return users.values()
+                .stream()
+                .filter(user -> user.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public User add(User user) {
         long id = getNextId();
         user.setId(id);

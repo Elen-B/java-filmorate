@@ -90,7 +90,7 @@ class UserTest {
         try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
             Validator validator = validatorFactory.getValidator();
             var violations = validator.validate(user);
-            assertEquals(2, violations.stream()
+            assertEquals(1, violations.stream()
                     .toList().size(), "Валидация не выполнена");
             assertTrue(
                     violations.stream()

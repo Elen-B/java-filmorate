@@ -22,6 +22,11 @@ public class DbUserStorage extends DbBaseStorage<User> implements UserStorage {
             "FROM users u " +
             "where u.user_id = ?";
 
+    private static final String FIND_BY_EMAIL_QUERY = "SELECT u.*, " +
+            "(SELECT Listagg(uf.friend_id, ',') FROM user_friend uf WHERE uf.user_id = u.user_id) as friends " +
+            "FROM users u " +
+            "where lower(u.email) = lower(?)";
+
     private static final String INSERT_QUERY = "INSERT INTO users(email, login, name, birth_date)" +
             "VALUES (?, ?, ?, ?)";
 
@@ -46,6 +51,12 @@ public class DbUserStorage extends DbBaseStorage<User> implements UserStorage {
     @Override
     public User getById(Long id) {
         Optional<User> user = findOne(FIND_BY_ID_QUERY, id);
+        return user.orElse(null);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        Optional<User> user = findOne(FIND_BY_EMAIL_QUERY, email);
         return user.orElse(null);
     }
 

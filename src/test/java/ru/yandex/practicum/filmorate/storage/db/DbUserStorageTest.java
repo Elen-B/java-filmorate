@@ -45,6 +45,20 @@ class DbUserStorageTest {
     }
 
     @Test
+    void shouldGetUserByEmail() {
+        User user = getTestUser();
+        userStorage.add(user);
+        userStorage.add(getTestUser2());
+        String email = user.getEmail().toUpperCase();
+        User resultUser = userStorage.getByEmail(email);
+        assertNotNull(resultUser, "неудалось получить пользователя по email");
+        assertEquals(user.getId(), resultUser.getId(), "Неверный ид полученного пользователя");
+        assertEquals(user.getLogin(), resultUser.getLogin(), "Неверный логин полученного пользователя");
+        assertEquals(user.getName(), resultUser.getName(), "Неверное имя полученного пользователя");
+        assertEquals(user.getBirthday(), resultUser.getBirthday(), "Неверная дата рождения полученного пользователя");
+    }
+
+    @Test
     void shouldAddUser() {
         User user = getTestUser();
         userStorage.add(user);

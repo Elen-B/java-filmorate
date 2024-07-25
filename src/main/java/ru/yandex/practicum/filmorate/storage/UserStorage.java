@@ -9,6 +9,8 @@ public interface UserStorage {
 
     User getById(Long id);
 
+    User getByEmail(String email);
+
     User add(User user);
 
     User update(User user);
