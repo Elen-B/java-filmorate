@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceprion.ConditionsNotMetException;
+import ru.yandex.practicum.filmorate.exceprion.DublicateException;
 import ru.yandex.practicum.filmorate.exceprion.NotFoundException;
 import ru.yandex.practicum.filmorate.exceprion.WrongArgumentException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -70,6 +71,9 @@ public class FilmService {
         }
         if (user == null) {
             throw new NotFoundException(String.format("Пользователь с ид %s не найден", userId));
+        }
+        if (film.getUserLikes().contains(user.getId())) {
+            throw new DublicateException("Фильм уже отмечен данным пользователем");
         }
         filmStorage.addLike(film, user);
     }

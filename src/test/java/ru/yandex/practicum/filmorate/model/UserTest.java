@@ -94,7 +94,7 @@ class UserTest {
                     .toList().size(), "Валидация не выполнена");
             assertTrue(
                     violations.stream()
-                            .anyMatch(cf -> cf.getConstraintDescriptor().getAnnotation().annotationType().getSimpleName().equals("NotNull")),
+                            .anyMatch(cf -> cf.getConstraintDescriptor().getAnnotation().annotationType().getSimpleName().equals("NotBlank")),
                     "Не работает валидация на пустую почту пользователя");
         }
     }

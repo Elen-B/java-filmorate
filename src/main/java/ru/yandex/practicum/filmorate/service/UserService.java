@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceprion.ConditionsNotMetException;
+import ru.yandex.practicum.filmorate.exceprion.DublicateException;
 import ru.yandex.practicum.filmorate.exceprion.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
@@ -63,6 +64,9 @@ public class UserService {
         }
         if (Objects.equals(userId, friendId)) {
             throw new IllegalArgumentException("Ид друга совпадает с ид пользователя");
+        }
+        if (user.getFriends().contains(friend.getId())) {
+            throw new DublicateException("Пользователь уже добавлен в список друзей");
         }
         userStorage.addFriend(user, friend);
     }
