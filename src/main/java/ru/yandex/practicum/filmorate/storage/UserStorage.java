@@ -9,9 +9,15 @@ public interface UserStorage {
 
     User getById(Long id);
 
+    User getByEmail(String email);
+
     User add(User user);
 
     User update(User user);
 
     void delete(Long id);
+
+    void addFriend(User user, User friend);
+
+    void deleteFriend(Long userId, Long friendId);
 }

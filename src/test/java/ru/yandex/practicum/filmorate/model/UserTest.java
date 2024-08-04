@@ -92,12 +92,9 @@ class UserTest {
             var violations = validator.validate(user);
             assertEquals(1, violations.stream()
                     .toList().size(), "Валидация не выполнена");
-            assertEquals("NotNull",
+            assertTrue(
                     violations.stream()
-                            .toList()
-                            .getFirst()
-                            .getConstraintDescriptor()
-                            .getAnnotation().annotationType().getSimpleName(),
+                            .anyMatch(cf -> cf.getConstraintDescriptor().getAnnotation().annotationType().getSimpleName().equals("NotBlank")),
                     "Не работает валидация на пустую почту пользователя");
         }
     }

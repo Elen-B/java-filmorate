@@ -7,8 +7,7 @@ import lombok.Data;
 import ru.yandex.practicum.filmorate.validator.AfterCinemaBirthday;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Film.
@@ -27,4 +26,6 @@ public class Film {
     @Positive
     private Long duration;
     private Set<Long> userLikes = new HashSet<>();
+    private Mpa mpa;
+    private List<Genre> genres = new ArrayList<>();
 }

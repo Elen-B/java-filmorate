@@ -25,6 +25,15 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
+    public User getByEmail(String email) {
+        return users.values()
+                .stream()
+                .filter(user -> user.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public User add(User user) {
         long id = getNextId();
         user.setId(id);
@@ -49,6 +58,18 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public void delete(Long id) {
         users.remove(id);
+    }
+
+    @Override
+    public void addFriend(User user, User friend) {
+        user.getFriends().add(friend.getId());
+        friend.getFriends().add(user.getId());
+    }
+
+    @Override
+    public void deleteFriend(Long userId, Long friendId) {
+        users.get(userId).getFriends().remove(friendId);
+        users.get(friendId).getFriends().remove(userId);
     }
 
     private long getNextId() {

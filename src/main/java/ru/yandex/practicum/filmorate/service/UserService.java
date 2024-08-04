@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceprion.ConditionsNotMetException;
+import ru.yandex.practicum.filmorate.exceprion.DublicateException;
 import ru.yandex.practicum.filmorate.exceprion.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
@@ -30,6 +31,9 @@ public class UserService {
 
     public User addUser(User user) {
         log.info("UserService: addUser user = {}", user);
+        if (userStorage.getByEmail(user.getEmail()) != null) {
+            throw new DublicateException(String.format("Пользователь с email %s уже существует", user.getEmail()));
+        }
         return userStorage.add(user);
     }
 
@@ -38,6 +42,14 @@ public class UserService {
         if (user.getId() == null) {
             log.error("user update: id is null");
             throw new ConditionsNotMetException("Id должен быть указан");
+        }
+        User oldUser = userStorage.getById(user.getId());
+        if (oldUser == null) {
+            throw new NotFoundException(String.format("Пользователь с ид %s не найден", user.getId()));
+        }
+        User existUser = userStorage.getByEmail(user.getEmail());
+        if (existUser != null && !Objects.equals(user.getId(), existUser.getId())) {
+            throw new DublicateException(String.format("Пользователь с email %s уже существует", user.getEmail()));
         }
         return userStorage.update(user);
     }
@@ -60,8 +72,10 @@ public class UserService {
         if (Objects.equals(userId, friendId)) {
             throw new IllegalArgumentException("Ид друга совпадает с ид пользователя");
         }
-        user.getFriends().add(friendId);
-        friend.getFriends().add(userId);
+        if (user.getFriends().contains(friend.getId())) {
+            throw new DublicateException("Пользователь уже добавлен в список друзей");
+        }
+        userStorage.addFriend(user, friend);
     }
 
     public void deleteFriend(Long userId, Long friendId) {
@@ -74,8 +88,7 @@ public class UserService {
         if (friend == null) {
             throw new NotFoundException(String.format("Пользователь с ид %s не найден", friendId));
         }
-        user.getFriends().remove(friendId);
-        friend.getFriends().remove(userId);
+        userStorage.deleteFriend(userId, friendId);
     }
 
     public Collection<User> getAllFriends(Long userId) {

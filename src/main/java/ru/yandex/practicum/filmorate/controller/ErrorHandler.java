@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.filmorate.controller.model.ErrorResponse;
 import ru.yandex.practicum.filmorate.exceprion.ConditionsNotMetException;
 import ru.yandex.practicum.filmorate.exceprion.NotFoundException;
+import ru.yandex.practicum.filmorate.exceprion.WrongArgumentException;
 
 import java.util.stream.Collectors;
 
@@ -28,6 +29,15 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErrorResponse handleConditionsNotMetException(final ConditionsNotMetException e) {
         log.error("handleConditionsNotMetException: {}", e.getMessage());
+        return new ErrorResponse(
+                e.getMessage()
+        );
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleWrongArgumentException(final WrongArgumentException e) {
+        log.error("handleWrongArgumentException: {}", e.getMessage());
         return new ErrorResponse(
                 e.getMessage()
         );
